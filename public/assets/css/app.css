@@ -1,0 +1,23 @@
+/* Background Colors */
+.bg-purple {
+    background-color: #6F42C1
+}
+
+.bg-blue-light {
+    background-color: #e3f2fd
+}
+
+/* Text Colors */
+.text-purple {
+    color: #6F42C1
+}
+
+/* Images */
+.img_boy_changing_tasks {
+    height: 350px !important;
+}
+
+/* Others */
+.border-radius-50 {
+    border-radius: 50%
+}

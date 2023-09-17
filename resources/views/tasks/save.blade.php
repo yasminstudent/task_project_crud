@@ -5,7 +5,7 @@
 @section('content')
     <div class="row">
         <div class="col-6">
-            <img src="{{asset("images/boy_changing_tasks.jpg")}}"
+            <img src="{{asset("assets/images/boy_changing_tasks.jpg")}}"
                  class="img-fluid"
                  alt="boy changing tasks">
         </div>

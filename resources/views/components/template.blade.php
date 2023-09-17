@@ -11,8 +11,8 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap" rel="stylesheet">
 
-        <link rel="stylesheet" href="{{asset("css/bootstrap.min.css")}}">
-        <link rel="stylesheet" href="{{asset("css/app.css")}}">
+        <link rel="stylesheet" href="{{asset("assets/css/bootstrap.min.css")}}">
+        <link rel="stylesheet" href="{{asset("assets/css/app.css")}}">
     </head>
     <body>
         @if (session('errorMessage'))
@@ -25,8 +25,8 @@
             <div class="container-fluid px-5">
                 <a class="navbar-brand" href="#">
                     <div>
-                        <span class="badge bg-white" style="border-radius: 50%">
-                            <img src="{{asset('images/logo.jpg')}}"  width="30" style="border-radius: 50%" />
+                        <span class="badge bg-white border-radius-50">
+                            <img src="{{asset('assets/images/logo.jpg')}}" width="30" class="border-radius-50" />
                         </span>
                     </div>
                 </a>
@@ -50,12 +50,12 @@
             @yield('content')
         </div>
 
-        <footer class="footer mt-auto py-3" style="background-color: #e3f2fd">
+        <footer class="footer mt-auto py-3 bg-blue-light">
             <div class="container">
                 <span class="text-muted">C.R.U.D de tarefas feito por Yasmin Silva.</span>
             </div>
         </footer>
 
-        <script src="{{asset("js/bootstrap.min.js")}}" />
+        <script src="{{asset("assets/js/bootstrap.min.js")}}"></script>
     </body>
 </html>

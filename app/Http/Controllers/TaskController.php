@@ -16,7 +16,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return view('tasks.display');
+        return view('tasks.display', [
+            'tasks' => Task::all()->toArray()
+        ]);
     }
 
     /**
