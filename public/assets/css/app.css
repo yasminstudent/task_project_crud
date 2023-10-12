@@ -18,6 +18,21 @@
 }
 
 /* Others */
-.border-radius-50 {
-    border-radius: 50%
+.actions_icon_container > div {
+    padding: 2px;
+    border: 1px solid #6F42C1;
+    transition: all 0.3s ease-in-out;
+}
+
+.actions_icon_container > div:hover {
+    transform: scale(1.2);
+    background-color: #A98EDA;
+}
+
+.ml-1 {
+    margin-left: 5px;
+}
+
+.mr-1 {
+    margin-right: 5px;
 }

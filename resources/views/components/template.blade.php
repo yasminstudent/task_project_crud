@@ -25,8 +25,8 @@
             <div class="container-fluid px-5">
                 <a class="navbar-brand" href="#">
                     <div>
-                        <span class="badge bg-white border-radius-50">
-                            <img src="{{asset('assets/images/logo.jpg')}}" width="30" class="border-radius-50" />
+                        <span class="badge bg-white rounded-circle">
+                            <img src="{{asset('assets/images/icons/logo.jpg')}}" width="30" class="rounded-circle" />
                         </span>
                     </div>
                 </a>

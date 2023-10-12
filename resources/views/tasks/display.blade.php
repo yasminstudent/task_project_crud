@@ -27,7 +27,7 @@
                             Data
                         </td>
                         <td>
-                            Status
+                            Finalizada
                         </td>
                         <td>
                             Ações
@@ -47,10 +47,25 @@
                                 {{ date('d/m/Y H\hi', strtotime($task['created_at'])) }}
                             </td>
                             <td>
-                                checkbox
+                                <div class="form-check d-flex justify-content-center">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           value=""
+                                           id="is_done"
+                                           @if($task['is_done']) checked @endif
+                                    >
+                                </div>
                             </td>
                             <td>
-                                icon edit/del
+                                <div class="d-flex justify-content-center actions_icon_container">
+                                    <div class="rounded mr-1" role="button">
+                                        <img width="27" src="{{asset('assets/images/icons/pencil_icon.png')}}" />
+                                    </div>
+
+                                    <div class="rounded ml-1" role="button">
+                                        <img width="27" src="{{asset('assets/images/icons/delete_icon.png')}}" />
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
