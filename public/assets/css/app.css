@@ -18,13 +18,13 @@
 }
 
 /* Others */
-.actions_icon_container > div {
+.actions_icon_container > a {
     padding: 2px;
     border: 1px solid #6F42C1;
     transition: all 0.3s ease-in-out;
 }
 
-.actions_icon_container > div:hover {
+.actions_icon_container > a:hover {
     transform: scale(1.2);
     background-color: #A98EDA;
 }

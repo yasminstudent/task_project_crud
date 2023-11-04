@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Task;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Http;
+use App\Helpers\CurlRequest;
+use GuzzleHttp\Client;
 
 class TaskController extends Controller
 {
@@ -29,7 +32,6 @@ class TaskController extends Controller
     public function create()
     {
         return view('tasks.save', [
-            'routeMethod' => 'POST',
             'routeName' => 'task.store',
             'routeParams' => [],
             'pageName' => 'Criar Tarefa',
@@ -40,34 +42,21 @@ class TaskController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|unique:tasks|string|max:255',
-            'description' => 'nullable|string|max:255',
-        ]);
-
+        // ----- VALIDAÇÃO DE PARÂMETROS -----
+        $redirectError = 'task/create';
+        $validator = $this->validateParametersSaveTask($request);
         if ($validator->fails()) {
-            return redirect('task/create')
+            return redirect($redirectError)
                 ->withErrors($validator)
                 ->withInput();
         }
+        // ----- FIM VALIDAÇÃO DE PARÂMETROS -----
 
-        try {
-            $task = new Task();
-            if ($request->input('description')) {
-                $task->description = $request->input('description');
-            }
-            $task->title = $request->input('title');
-            $task->save();
-
-            return redirect('task');
-        } catch (\Exception $e) {
-              return redirect('task/create')
-                  ->with('errorMessage', 'Erro ao criar tarefa: '.$e->getMessage());
-        }
+        $task = new Task();
+        return $this->saveTask($task, $request, $redirectError);
     }
 
     /**
@@ -90,10 +79,10 @@ class TaskController extends Controller
     public function edit($id)
     {
         return view('tasks.save', [
-            'routeMethod' => 'PUT',
             'routeName' => 'task.update',
-            'routeParams' => ['id' => $id],
+            'routeParams' => [$id],
             'pageName' => 'Editar Tarefa',
+            'task' => Task::all()->find($id)->toArray(),
         ]);
     }
 
@@ -102,11 +91,26 @@ class TaskController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $id)
     {
-        //
+        // ----- VALIDAÇÃO DE PARÂMETROS -----
+        if (!$id) {
+            return redirect('task');
+        }
+
+        $redirectError = 'task/'.$id.'/edit';
+        $validator = $this->validateParametersSaveTask($request);
+        if ($validator->fails()) {
+            return redirect($redirectError)
+                ->withErrors($validator)
+                ->withInput();
+        }
+        // ----- FIM VALIDAÇÃO DE PARÂMETROS -----
+
+        $task = Task::all()->find($id);
+        return $this->saveTask($task, $request, $redirectError);
     }
 
     /**
@@ -118,5 +122,56 @@ class TaskController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Change task status.
+     *
+     * @param  int  $id
+     * @return void
+     */
+    public function changeStatus($id)
+    {
+        $task = Task::all()->find($id);
+        $task->is_done = 1 - $task->is_done;
+        $task->save();
+    }
+
+    /**
+     * Validate parameters to save task.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Validation\Validator
+     */
+    private function validateParametersSaveTask(Request $request)
+    {
+        return Validator::make($request->all(), [
+            'title' => 'required|unique:tasks|string|max:255',
+            'description' => 'nullable|string|max:255',
+        ]);
+    }
+
+    /**
+     * Save task.
+     *
+     * @param  Task  $task
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string $redirectError
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|void
+     */
+    private function saveTask(Task $task, Request $request, string $redirectError)
+    {
+        try {
+            if ($request->input('description')) {
+                $task->description = $request->input('description');
+            }
+            $task->title = $request->input('title');
+            $task->save();
+
+            return redirect('task');
+        } catch (\Exception $e) {
+            return redirect($redirectError)
+                ->with('errorMessage', 'Erro ao salvar tarefa: '.$e->getMessage());
+        }
     }
 }

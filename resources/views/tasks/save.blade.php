@@ -11,7 +11,7 @@
         </div>
         <div class="col-6">
             <div class="d-flex w-100 h-100 align-items-center">
-                <form method="{{$routeMethod}}"
+                <form method="POST"
                       action="{{route($routeName, $routeParams)}}"
                       class="row">
                     @csrf
@@ -24,6 +24,7 @@
                                class="form-control"
                                id="title" name="title"
                                placeholder="Ex: estudar"
+                               value="{{$task['title'] ??  '' }}"
                                required>
                     </div>
                     <div class="col-12 mb-3">
@@ -32,10 +33,10 @@
                                   id="description"
                                   name="description"
                                   maxlength="250"
-                                  rows="3"></textarea>
+                                  rows="3">{{$task['description'] ?? '' }}</textarea>
                     </div>
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary mt-3">Criar Tarefa</button>
+                        <button type="submit" class="btn btn-primary mt-3">{{$pageName}}</button>
                     </div>
                 </form>
             </div>

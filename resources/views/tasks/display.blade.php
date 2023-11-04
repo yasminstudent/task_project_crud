@@ -48,23 +48,23 @@
                             </td>
                             <td>
                                 <div class="form-check d-flex justify-content-center">
-                                    <input class="form-check-input"
+                                    <input class="form-check-input is_done"
                                            type="checkbox"
                                            value=""
-                                           id="is_done"
+                                           onclick="editTaskStatus({{$task['id']}})"
                                            @if($task['is_done']) checked @endif
                                     >
                                 </div>
                             </td>
                             <td>
                                 <div class="d-flex justify-content-center actions_icon_container">
-                                    <div class="rounded mr-1" role="button">
+                                    <a class="rounded mr-1" role="button" href="{{route('task.edit', $task['id'])}}">
                                         <img width="27" src="{{asset('assets/images/icons/pencil_icon.png')}}" />
-                                    </div>
+                                    </a>
 
-                                    <div class="rounded ml-1" role="button">
+                                    <a class="rounded ml-1" role="button" href="{{route('task.destroy', $task['id'])}}">
                                         <img width="27" src="{{asset('assets/images/icons/delete_icon.png')}}" />
-                                    </div>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -73,4 +73,14 @@
             </table>
         </div>
     @endempty
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        function editTaskStatus(id){
+            $.ajax({
+                url: "http://127.0.0.1:8085/task/change_status/" + id,
+                method: 'POST'
+            });
+        }
+    </script>
 @stop
