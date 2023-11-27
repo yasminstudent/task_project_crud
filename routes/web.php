@@ -14,7 +14,8 @@ use App\Http\Controllers\TaskController;
 |
 */
 
-Route::resource('task', TaskController::class)->except(['update']);
+Route::resource('task', TaskController::class)->except(['update', 'destroy']);
 Route::post('/task/{id}', [TaskController::class, 'update'])->name('task.update');
 Route::post('/task/change_status/{id}', [TaskController::class, 'changeStatus']);
+Route::get('/task/delete/{id}', [TaskController::class, 'destroy'])->name('task.destroy');
 Route::redirect('/', 'task');

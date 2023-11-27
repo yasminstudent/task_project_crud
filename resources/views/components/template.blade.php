@@ -15,12 +15,6 @@
         <link rel="stylesheet" href="{{asset("assets/css/app.css")}}">
     </head>
     <body>
-        @if (session('errorMessage'))
-            <div class="alert alert-danger">
-                {{ session('errorMessage') }}
-            </div>
-        @endif
-
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container-fluid px-5">
                 <a class="navbar-brand" href="#">
@@ -45,6 +39,18 @@
                 </div>
             </div>
         </nav>
+
+        @if (session('errorMessage'))
+            <div class="alert alert-danger">
+                {{ session('errorMessage') }}
+            </div>
+        @endif
+
+        @if (session('successMessage'))
+            <div class="alert alert-success">
+                {{ session('successMessage') }}
+            </div>
+        @endif
 
         <div class="container pt-3">
             @yield('content')

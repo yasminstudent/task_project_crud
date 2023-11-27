@@ -117,11 +117,18 @@ class TaskController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
     {
-        //
+        try {
+            Task::all()->find($id)->delete();
+            return redirect('task')
+                ->with('successMessage', 'Tarefa excluída com sucesso');
+        } catch (\Exception $e) {
+            return redirect('task')
+                ->with('errorMessage', 'Erro ao excluir tarefa: '.$e->getMessage());
+        }
     }
 
     /**
